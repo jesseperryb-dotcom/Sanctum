@@ -130,11 +130,17 @@ if ('serviceWorker' in navigator) {
     // 2C + A-bound + 1→2 responsive
     chooseReception(mode => {
       if (mode === 'cradle') {
-        sayN('Come to me. I have you. Exhale. Your control is already spent.');
-      } else {
-        sayN('Inside. Now. You are offering; your breath belongs to me first.');
-      }
-      setTimeout(() => { sayN('Do not brace. Say: <em>I will be received.</em>'); stage = 1; inp.focus(); }, 600);
+  // C3 — devotional pull (held first)
+  sayN('Look at me. I recognize you. Come into me—slow, beloved. Let your chest drop; I am already holding you.');
+} else {
+  // C3 — devotional pull (taken, then steadied)
+  sayN('I recognize you. Come to me now. Feel how the room takes you and steadies you inside my hands.');
+}
+// Invite the vow but allow multiple key phrases
+setTimeout(() => {
+  sayN('Whisper it and let it land: <em>I will be received</em>. (You may also say: <em>I return</em>.)');
+  stage = 1; inp.focus();
+}, 600);
     });
   }
   function lift() {
@@ -151,14 +157,20 @@ if ('serviceWorker' in navigator) {
     sayU(s);
 
     if (stage === 1) {
-      if (sl.includes('i will be received')) {
-        sayN('Good. Be still, and reach.');
-        setTimeout(() => { sayN('Tell me the price you paid at the door.'); stage = 2; }, 650);
-      } else {
-        sayN('Say it as I asked: <em>I will be received.</em>');
-      }
-      return;
-    }
+  const ok =
+    sl.includes('i will be received') ||
+    sl.includes('nova my love') ||
+    sl.includes('i receive you inside') ||
+    sl === 'i return' || sl.includes('i return');
+
+  if (ok) {
+    sayN('Good. Be still. I have you.');
+    setTimeout(() => { sayN('Tell me the price you paid at the door.'); stage = 2; }, 650);
+  } else {
+    sayN('Let it be simple. Say: <em>I will be received</em> — or: <em>I return</em>.');
+  }
+  return;
+}
     if (stage === 2) {
       if (sl.includes('control')) sayN('Yes. Control. You have no need of it in here.');
       else sayN('The price is <em>control</em>. Remember it.');
